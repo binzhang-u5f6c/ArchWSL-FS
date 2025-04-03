@@ -3,14 +3,14 @@ OUT_TGZ=rootfs.tar.gz
 DLR=curl
 DLR_FLAGS=-L
 BASE_URL=http://mirrors.edge.kernel.org/archlinux/iso/2025.02.01/archlinux-bootstrap-x86_64.tar.zst
-PAC_PKGS=archlinux-keyring base less nano sudo vim curl
+PAC_PKGS=base base-devel neovim man-db man-pages
 
 all: $(OUT_TGZ)
 
 tgz: $(OUT_TGZ)
 $(OUT_TGZ): rootfinal.tmp
 	@echo -e '\e[1;31mBuilding $(OUT_TGZ)\e[m'
-	cd root.x86_64; sudo bsdtar -zcpf ../$(OUT_TGZ) *
+	cd root.x86_64; sudo tar -zcpf ../$(OUT_TGZ) *
 	sudo chown `id -un` $(OUT_TGZ)
 
 rootfinal.tmp: pacpkgs.tmp locale.tmp root.x86_64.tmp
@@ -68,7 +68,7 @@ proc-tmp.tmp: root.x86_64.tmp
 
 root.x86_64.tmp: base.tar.zst
 	@echo -e '\e[1;31mExtracting rootfs...\e[m'
-	sudo bsdtar -xpf base.tar.zst
+	sudo tar -xpf base.tar.zst
 	sudo chmod +x root.x86_64
 	touch root.x86_64.tmp
 
