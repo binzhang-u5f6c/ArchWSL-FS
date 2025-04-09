@@ -1,0 +1,11 @@
+{
+  "profiles": [
+    {
+      "name": "ArchLinux",
+      "hidden": false,
+      "colorScheme": { "light": "Solarized Light" },
+      "cursorShape": "filledBox",
+      "font": { "face": "Hack" }
+    }
+  ]
+}
