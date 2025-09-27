@@ -2,15 +2,8 @@ return {
   {
     "neovim/nvim-lspconfig",
       config = function()
-        local lspconfig = require("lspconfig")
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        -- lspconfig.bashls.setup {
-        --   cmd = { "bash-language-server", "start" },
-        --   filetypes = { "bash", "sh" },
-        --   trace = { server = "verbose" },
-        --   capabilities = capabilities,
-        -- }
-        lspconfig.pylsp.setup {
+        vim.lsp.config("pylsp", {
           cmd = { "pylsp", "-v", "--log-file", "/tmp/lsp_pylsp.log" },
           filetypes = { "python" },
           trace = { server = "verbose" },
@@ -33,19 +26,7 @@ return {
               }
             }
           },
-        }
-        -- lspconfig.clangd.setup {
-        --   cmd = { "clangd" },
-        --   filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp", "cuda", "proto" },
-        --   trace = { server = "verbose" },
-        --   capabilities = capabilities,
-        -- }
-        -- lspconfig.rust_analyzer.setup {
-        --   cmd = { "rust-analyzer" },
-        --   filetypes = { "rust" },
-        --   trace = { server = "verbose" },
-        --   capabilities = capabilities,
-        -- }
+        })
         vim.opt.updatetime = 300
         vim.cmd [[
           autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()

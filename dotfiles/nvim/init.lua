@@ -64,3 +64,9 @@ vim.keymap.set("n", "<Leader>b", builtin.buffers, { desc = "Telescope find buffe
 vim.keymap.set("n", "<Leader>p", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<Leader>d", builtin.diagnostics, { desc = "Telescope show diagnostics" })
 vim.keymap.set("n", "<Leader>t", builtin.lsp_document_symbols, { desc = "Telescope show symbols" })
+
+-- Enable LSP
+vim.lsp.enable("bashls")
+vim.lsp.enable("pylsp")
+vim.lsp.enable("clangd")
+vim.lsp.enable("rust-analyzer")

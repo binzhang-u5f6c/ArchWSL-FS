@@ -14,7 +14,15 @@ return {
       opts = {
         options = {
           theme = "solarized_light",
-          icons_enabled = false
+          icons_enabled = true,
+        },
+        sections = {
+          lualine_c = {
+            {
+              "filename",
+              path = 1
+            }
+          }
         }
       },
       lazy = false
