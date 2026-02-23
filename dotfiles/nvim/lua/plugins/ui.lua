@@ -2,15 +2,16 @@ return {
   {
     "Tsuzat/NeoSolarized.nvim",
       priority = 1000,
+      lazy = false,
       opts = {
           style = "light",
-          transparent = false
+          transparent = false,
       },
-      lazy = false
   },
   {
     "nvim-lualine/lualine.nvim",
       dependencies = { "nvim-tree/nvim-web-devicons" },
+      lazy = false,
       opts = {
         options = {
           theme = "solarized_light",
@@ -18,43 +19,94 @@ return {
         },
         sections = {
           lualine_c = {
-            {
-              "filename",
-              path = 1
-            }
-          }
-        }
+            { "filename", path = 1 },
+          },
+        },
       },
-      lazy = false
   },
   {
-    "nvim-telescope/telescope.nvim", branch = "0.1.x",
-      dependencies = { "nvim-lua/plenary.nvim" },
-      opts = {}
+    "nvim-treesitter/nvim-treesitter",
+      branch = "master",
+      lazy = false,
+      config = function()
+        local ts = require("nvim-treesitter.configs")
+        ts.setup({
+          ensure_installed = {
+            "c",
+            "lua",
+            "vim",
+            "vimdoc",
+            "query",
+            "markdown",
+            "markdown_inline",
+            "python",
+          },
+          highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+          },
+          incremental_selection = {
+            enable = true,
+            keymaps = {
+              init_selection = "gnv",
+              node_incremental = "gna",
+              scope_incremental = "gnA",
+              node_decremental = "gni",
+            },
+          },
+          indent = { enable = false },
+        })
+      end,
+      build = ":TSUpdate",
   },
-  { "tpope/vim-fugitive" },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+      lazy = false,
+      opts = {},
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+      lazy = false,
+      init = function()
+        vim.g.no_plugin_maps = true
+      end,
+      opts = {
+        select = { lookahead = true },
+      },
+  },
+  {
+    "nvim-telescope/telescope.nvim",
+      dependencies = { "nvim-lua/plenary.nvim" },
+      event = "VeryLazy",
+      opts = {
+        extensions = {
+          bookmarks = {},
+        },
+      },
+  },
+  { 
+    "tpope/vim-fugitive",
+      event = "VeryLazy",
+  },
   {
     "lewis6991/gitsigns.nvim",
-      opts = {}
+      event = "VeryLazy",
+      opts = {},
   },
   {
     "tomasky/bookmarks.nvim",
+      event = "BufEnter",
       opts = {
-        sign_priority = 8,  --set bookmark sign priority to cover other sign
-        save_file = vim.fn.expand "$HOME/.bookmarks", -- bookmarks save file path
+        --set bookmark sign priority to cover other sign
+        sign_priority = 8,
+        -- bookmarks save file path
+        save_file = vim.fn.stdpath("data") .. "/bookmark",
         keywords =  {
-          ["@r"] = "r", -- mark annotation startswith @r ,signs this icon as `Read Only`
-          ["@f"] = "f", -- mark annotation startswith @f ,signs this icon as `Fix`
+          -- mark annotation startswith @r ,signs this icon as `Read Only`
+          ["@r"] = "",
+          -- mark annotation startswith @t ,signs this icon as `Todo`
+          ["@t"] = "",
         },
-        on_attach = function(bufnr)
-          local bm = require("bookmarks")
-          vim.keymap.set("n","mm",bm.bookmark_toggle) -- add or remove bookmark at current line
-          vim.keymap.set("n","mi",bm.bookmark_ann) -- add or edit mark annotation at current line
-          vim.keymap.set("n","ma",bm.bookmark_list) -- show marked file list in quickfix window
-          vim.keymap.set("n","mc",bm.bookmark_clean) -- clean all marks in local buffer
-          vim.keymap.set("n","mx",bm.bookmark_clear_all) -- removes all bookmarks
-        end
       },
-      event = "BufEnter"
   },
 }

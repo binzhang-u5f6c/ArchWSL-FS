@@ -1,6 +1,4 @@
-#
 # ~/.bashrc
-#
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -21,5 +19,8 @@ PS1='\[\033[34m\]\W\[\033[31m\]$(nonzero_return)\[\033[0m\] \$ '
 
 # local PATH
 if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]]; then
-    PATH="$HOME/.local/bin:$PATH"
+    export PATH="$HOME/.local/bin:$PATH"
 fi
+
+# history ignore
+export HISTIGNORE='ls:sl:cd:pwd:clear:history'

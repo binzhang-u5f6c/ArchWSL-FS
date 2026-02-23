@@ -1,4 +1,12 @@
 return {
-  { "easymotion/vim-easymotion" },
-  { "jiangmiao/auto-pairs" },
+  {
+    "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      opts = {},
+  },
+  {
+    "smoka7/hop.nvim",
+      event = "VeryLazy",
+      opts = {},
+  },
 }
